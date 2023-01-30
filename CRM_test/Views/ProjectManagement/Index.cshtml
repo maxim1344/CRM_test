@@ -1,0 +1,445 @@
+﻿@model IEnumerable<Project>
+
+<style>
+.pageWrapper {
+	display: flex;
+	flex-flow: row wrap;
+	column-gap: 20px;
+	margin: 20px;
+}
+.dragWrapper {
+	display: flex;
+	flex-direction: column;
+	row-gap: 10px;
+	/*box-shadow: 0 0 5px #ddd;*/
+	width: fit-content;
+	min-width: 230px;
+	/*max-width: 230px;*/
+	padding: 20px 10px;
+	border-radius: 5px;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background: rgb(244,245,247);
+}
+.dragableItem {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	width: 210px !important;
+	height: 40px !important;
+	border: 1px solid #fedcdc4f;
+	text-align: center;
+	font-size: 14px;
+	padding: 15px 20px;
+	line-height: 1;
+	cursor: grab;
+	background: #fff;
+	border-radius: 3px;
+	box-shadow: rgba(23,43,77,0.2) 0px 1px 1px 0px, rgba(23,43,77,0.2) 0px 0px 1px 0px;
+}
+.dragableItem:hover {
+	border: 1px solid #E45E5F;
+}
+.gu-mirror {
+	position: fixed !important;
+	margin: 0 !important;
+	z-index: 9999 !important;
+	opacity: 0.8;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+	filter: alpha(opacity=80);
+}
+.gu-hide {
+	display: none !important;
+}
+.gu-unselectable {
+	-webkit-user-select: none !important;
+	-moz-user-select: none !important;
+	-ms-user-select: none !important;
+	user-select: none !important;
+}
+.gu-transit {
+	opacity: 0.2;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+	filter: alpha(opacity=20);
+}
+.test1 {
+	height: auto !important;
+	text-align: left;
+	padding-left: 20px;	
+}
+.test2 {
+	word-break: break-all;
+}
+
+.caption {
+	width: 100%;
+	display: block;
+	text-transform: uppercase;
+	font-size: 10px;
+	font-weight: 700;
+	padding-bottom: 5px;
+}
+
+.spacer_20 {
+	width: 100%;
+	height: 20px;
+}
+
+.caption_value {
+	width: 100%;
+	display: block;
+	font-size: 16px;
+	font-weight: 400;
+}
+
+.task_header {
+	width: 230px;
+	display: inline-block;
+	font-size: 14px;
+	font-weight: 500;
+	background: rgb(244,245,247);
+	border-radius: 5px;
+	padding: 5px;
+	padding-left: 10px;
+	text-transform: uppercase;
+	color: #505050;
+	margin-bottom: 5px;
+}
+
+.element_st {
+	width: 100%;
+}
+
+.submit_wrapper {
+	display: flex;
+	width: 100%;
+	height: 48px;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.submit_button {
+	width: 100%;
+	height: 48px;
+	border-radius: 14px;
+	background: #c2e7ff;
+	border: none;
+	box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+	cursor: pointer;
+}
+
+.noty_icon {
+	width: 32px !important;
+	height: 32px !important;
+	color: aqua;
+}
+
+</style>
+
+<h3>Управление проектами</h3>
+<div class="pageWrapper">
+<div class="">
+<div class="task_header">Заявка</div>
+<div id="@ProjectStatus.Заявка" class="dragWrapper dragWrapper_1">
+			@foreach (var item in Model)
+			{
+				@if (item.Status == ProjectStatus.Заявка)
+				{
+						<div id="@item.Id" class="dragableItem test1 dragableItem_@item.Id">
+							<div class="element_st">
+								<div class="caption">
+								Проект
+								</div>
+								<div class="caption_value">
+								@Convert.ToString(item.Name)
+								</div>
+								<div class="spacer_20">
+								</div>
+								<div class="caption">
+								Клиент
+								</div>
+								<div class="caption_value">
+								@Html.DisplayFor(modelItem => item.Client.Name)
+								</div>
+								<hr></hr>
+								<div class="caption">
+								Описание
+								</div>
+								<div class="test2 caption_value">
+								@Convert.ToString(item.Description)
+								</div>
+							</div>
+						</div>
+				}
+			}
+</div>
+</div>
+<div class="">
+<div class="task_header">Подготовка</div>
+<div id="@ProjectStatus.Подготовка" class="dragWrapper dragWrapper_2">
+			@foreach (var item in Model)
+			{
+				@if (item.Status == ProjectStatus.Подготовка)
+				{
+						<div id="@item.Id" class="dragableItem test1 dragableItem_@item.Id">
+							<div class="element_st">
+								<div class="caption">
+								Проект
+								</div>
+								<div class="caption_value">
+								@Convert.ToString(item.Name)
+								</div>
+								<div class="spacer_20">
+								</div>
+								<div class="caption">
+								Клиент
+								</div>
+								<div class="caption_value">
+								@Html.DisplayFor(modelItem => item.Client.Name)
+								</div>
+								<hr></hr>
+								<div class="caption">
+								Описание
+								</div>
+								<div class="test2 caption_value">
+								@Convert.ToString(item.Description)
+								</div>
+							</div>
+						</div>
+				}
+			}
+</div>
+</div>
+<div class="">
+<div class="task_header">Переговоры</div>
+<div id="@ProjectStatus.Переговоры" class="dragWrapper dragWrapper_3">
+			@foreach (var item in Model)
+			{
+				@if (item.Status == ProjectStatus.Переговоры)
+				{
+					@if (ViewBag.D.ContainsKey(item.Id))
+					{
+							<div id="@item.Id" style="background:#ff000066" class="dragableItem test1 dragableItem_@item.Id">
+								<div class="element_st">
+									<div class="caption">
+									Проект
+									</div>
+									<div class="caption_value">
+									@Convert.ToString(item.Name)
+									</div>
+									<div class="spacer_20">
+									</div>
+									<div class="caption">
+									Клиент
+									</div>
+									<div class="caption_value">
+									@Html.DisplayFor(modelItem => item.Client.Name)
+									</div>
+									<div class="spacer_20">
+									</div>
+									<div class="caption">
+												Время напоминания
+									</div>
+
+									<div class="caption_value">
+									@item.dtNotify
+									</div>
+
+									<hr></hr>
+									<div class="caption">
+									Описание
+									</div>
+									<div class="test2 caption_value">
+									@Convert.ToString(item.Description)
+									</div>
+									<div class="mt-4">
+									<form asp-action="NavToNotification" method="post">
+									<input type="hidden" name="id" value="@item.Id" />
+									<div class="submit_wrapper">
+									<button type="submit" class="submit_button">
+									<svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M12 22q-.825 0-1.412-.587Q10 20.825 10 20h4q0 .825-.587 1.413Q12.825 22 12 22Zm8-9q-.425 0-.712-.288Q19 12.425 19 12v-2h-2q-.425 0-.712-.288Q16 9.425 16 9t.288-.713Q16.575 8 17 8h2V6q0-.425.288-.713Q19.575 5 20 5t.712.287Q21 5.575 21 6v2h2q.425 0 .712.287Q24 8.575 24 9t-.288.712Q23.425 10 23 10h-2v2q0 .425-.288.712Q20.425 13 20 13ZM5 19q-.425 0-.713-.288Q4 18.425 4 18t.287-.712Q4.575 17 5 17h1v-7q0-2.125 1.275-3.713Q8.55 4.7 10.5 4.2v-.7q0-.625.438-1.062Q11.375 2 12 2t1.062.438q.438.437.438 1.062v.7q.475.1.913.287.437.188.787.438-.725.875-1.087 1.9Q13.75 7.85 13.75 9q0 2.125 1.162 3.738Q16.075 14.35 18 15.1V17h1q.425 0 .712.288.288.287.288.712t-.288.712Q19.425 19 19 19Z" fill="#212121"/></svg>
+
+									&nbsp;Оповещение
+									</button>
+									</div>
+									</form>
+									</div>
+								</div>
+							</div>
+					}
+					else
+					{
+							<div id="@item.Id" class="dragableItem test1 dragableItem_@item.Id">
+								<div class="element_st">
+									<div class="caption">
+									Проект
+									</div>
+									<div class="caption_value">
+									@Convert.ToString(item.Name)
+									</div>
+									<div class="spacer_20">
+									</div>
+									<div class="caption">
+									Клиент
+									</div>
+									<div class="caption_value">
+									@Html.DisplayFor(modelItem => item.Client.Name)
+									</div>
+									<div class="spacer_20">
+									</div>
+									<div class="caption">
+									Время напоминания
+									</div>
+									<div class="caption_value">
+									@item.dtNotify
+									</div>
+									<hr></hr>
+									<div class="caption">
+									Описание
+									</div>
+									<div class="test2 caption_value">
+									@Convert.ToString(item.Description)
+									</div>
+									<div class="mt-4">
+									<form asp-action="NavToNotification" method="post">
+									<input type="hidden" name="id" value="@item.Id" />
+									<div class="submit_wrapper">
+									<button type="submit" class="submit_button">
+									<svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M12 22q-.825 0-1.412-.587Q10 20.825 10 20h4q0 .825-.587 1.413Q12.825 22 12 22Zm8-9q-.425 0-.712-.288Q19 12.425 19 12v-2h-2q-.425 0-.712-.288Q16 9.425 16 9t.288-.713Q16.575 8 17 8h2V6q0-.425.288-.713Q19.575 5 20 5t.712.287Q21 5.575 21 6v2h2q.425 0 .712.287Q24 8.575 24 9t-.288.712Q23.425 10 23 10h-2v2q0 .425-.288.712Q20.425 13 20 13ZM5 19q-.425 0-.713-.288Q4 18.425 4 18t.287-.712Q4.575 17 5 17h1v-7q0-2.125 1.275-3.713Q8.55 4.7 10.5 4.2v-.7q0-.625.438-1.062Q11.375 2 12 2t1.062.438q.438.437.438 1.062v.7q.475.1.913.287.437.188.787.438-.725.875-1.087 1.9Q13.75 7.85 13.75 9q0 2.125 1.162 3.738Q16.075 14.35 18 15.1V17h1q.425 0 .712.288.288.287.288.712t-.288.712Q19.425 19 19 19Z" fill="#21212"/></svg>
+
+									&nbsp;Оповещение
+									</button>
+									</div>
+									</form>
+									</div>
+								</div>
+							</div>
+
+					}
+				}
+			}
+
+</div>
+</div>
+<div class="">
+<div class="task_header">Оплата</div>
+<div id="@ProjectStatus.Оплата" class="dragWrapper dragWrapper_4">
+			@foreach (var item in Model)
+			{
+				@if (item.Status == ProjectStatus.Оплата)
+				{
+
+						<div id="@item.Id" class="dragableItem test1 dragableItem_@item.Id">
+							<div class="element_st">
+								<div class="caption">
+								Проект
+								</div>
+								<div class="caption_value">
+								@Convert.ToString(item.Name)
+								</div>
+								<div class="spacer_20">
+								</div>
+								<div class="caption">
+								Клиент
+								</div>
+								<div class="caption_value">
+								@Html.DisplayFor(modelItem => item.Client.Name)
+								</div>
+								<hr></hr>
+								<div class="caption">
+								Описание
+								</div>
+								<div class="test2 caption_value">
+								@Convert.ToString(item.Description)
+								</div>
+							</div>
+						</div>
+
+				}
+			}
+
+</div>
+</div>
+<div class="">
+<div class="task_header">Доставка</div>
+<div id="@ProjectStatus.Доставка" class="dragWrapper dragWrapper_5">
+			@foreach (var item in Model)
+			{
+				@if (item.Status == ProjectStatus.Доставка)
+				{
+						<div id="@item.Id" class="dragableItem test1 dragableItem_@item.Id">
+							<div class="element_st">
+								<div class="caption">
+								Проект
+								</div>
+								<div class="caption_value">
+								@Convert.ToString(item.Name)
+								</div>
+								<div class="spacer_20">
+								</div>
+								<div class="caption">
+								Клиент
+								</div>
+								<div class="caption_value">
+								@Html.DisplayFor(modelItem => item.Client.Name)
+								</div>
+								<hr></hr>
+								<div class="caption">
+								Описание
+								</div>
+								<div class="test2 caption_value">
+								@Convert.ToString(item.Description)
+								</div>
+							</div>
+						</div>
+				}
+			}
+</div>
+</div>
+</div>
+
+
+<script>
+	window.onload = function()
+	{
+		dragula([
+			document.querySelector(".dragWrapper_1"),
+			document.querySelector(".dragWrapper_2"),
+			document.querySelector(".dragWrapper_3"),
+			document.querySelector(".dragWrapper_4"),
+			document.querySelector(".dragWrapper_5"),])
+
+
+
+
+			.on('drop', function (el, container) {
+				let url = "@Url.Action("UpdateStatus","ProjectManagement")"
+				let unicId = el.getAttribute("id");
+				let newStatus = container.getAttribute("id")
+
+				let formData = new FormData();
+				formData.append("id", unicId);
+				formData.append("status", newStatus);
+				console.log(url)
+
+				fetch(url,
+				{
+					method: "POST",
+					body: formData
+				})
+				.then(responce => responce.text())
+				.then(data => {
+				console.log("data:", data)
+				})
+				setTimeout(function anone()
+				{
+					location.reload()
+				},250)
+			console.log("Блок помещён в контейнер", unicId, newStatus)
+			})
+
+	}	
+</script>

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Client>
+
+@{
+    ViewData["Title"] = "Список клиентов";
+}
+<h1>@ViewData["Title"]</h1>
+<a class="btn btn-success mt-2 mb-2" asp-area="" asp-controller="Client" asp-action="Create">Добавить</a>
+<table class="table table-striped">  
+    <thead>
+        <tr>
+            <th width="5%">
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+             <th width="15%">
+               Имя
+            </th>            
+             <th width="20%">
+                Комментарий
+            </th>
+             <th width="15%">                
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {        
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.Comment)
+                    </td> 
+                <td>
+                        <a class="btn btn-primary" asp-controller="Client" asp-action="Edit" asp-route-id="@item.Id">Редактировать</a>
+                            <a class="btn btn-danger" asp-controller="Client" asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                    </td>
+            </tr>
+        }
+    </tbody>
+</table>

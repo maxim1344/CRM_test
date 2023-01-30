@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Notification>
+
+@{
+    ViewData["Title"] = "Список напоминаний";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table table-striped mt-4" >  
+    <thead>
+        <tr>
+            <th width="5%">
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+             <th width="25%">
+                Дата напоминания
+            </th>
+             <th width="20%">
+                @Html.DisplayNameFor(model => model.ProjectId)
+            </th>
+             <th width="10%">                
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {        
+                <tr>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.DateOfNotification)
+                    </td>        
+                    <td>
+                    @Html.DisplayFor(modelItem => item.ProjectId)
+                    </td>                   
+                    <td>
+                        <a class="btn btn-danger" asp-controller="Notification" asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>

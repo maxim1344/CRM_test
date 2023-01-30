@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Project>
+
+@{
+    ViewData["Title"] = "Список проектов";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<a class="btn btn-success  mt-2 mb-2" asp-area="" asp-controller="Project" asp-action="Create">Создать</a>
+
+<table class="table table-striped">  
+    <thead>
+        <tr>
+            <th width="5%">
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+             <th width="20%">
+                Имя
+            </th>
+             <th width="15%">
+                Клиент
+            </th>
+            <th width="10%">
+                Статус
+            </th>
+             <th width="20%">
+                Описание
+            </th>
+             <th width="15%">                
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Client.Name)
+                </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                        <a class="btn btn-primary" asp-controller="Project" asp-action="Edit" asp-route-id="@item.Id">Редактировать</a>
+                        <a class="btn btn-danger" asp-controller="Project" asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
